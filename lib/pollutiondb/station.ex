@@ -33,8 +33,12 @@ defmodule Pollutiondb.Station do
   end
 
   def find_by_name(name) do
-     Pollutiondb.Repo.all(
-            Ecto.Query.where(Pollutiondb.Station, name: ^name) )
+    from(s in Pollutiondb.Station,
+      where: like(s.name, ^"%#{name}%"))
+    |> Pollutiondb.Repo.all()
+
+    #  Pollutiondb.Repo.all(
+    #         Ecto.Query.where(Pollutiondb.Station, name: ^name) )
   end
 
   def find_by_location(lon, lat) do
